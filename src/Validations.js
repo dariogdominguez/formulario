@@ -1,6 +1,6 @@
 export function allLetter(inputtxt)
 {
-var letters = /^[A-Za-z]+$/;
+const letters = /^[A-Za-zñÑ\s]+$/;
 if(inputtxt.match(letters))
 {
 return true;
@@ -11,7 +11,7 @@ return false;
 
 export function allnumeric(inputtxt)
 {
-var numbers = /^[0-9]+$/;
+let numbers = /^[0-9]+$/;
 if(inputtxt.match(numbers))
 {
 return true;
@@ -20,14 +20,29 @@ else{
 return false;
 }}
 function isValidDate(date) {
-    var temp = date.split('/');
-    var d = new Date(temp[2] + '/' + temp[1] + '/' + temp[0]);
-    return (d && (d.getMonth() + 1) == temp[1] && d.getDate() == Number(temp[0]) && d.getFullYear() == Number(temp[2]));
+    const temp = date.split('/');
+    const day = Number(temp[0]);
+    const month = Number(temp[1]) - 1; // Resta 1 para que sea compatible con getMonth()
+    const year = Number(temp[2]);
+    
+    // Validación básica de año, mes y día
+    if (year < 1000 || year > 9999 || month < 0 || month > 11 || day < 1) {
+        return false;
+    }
+    
+    const d = new Date(year, month, day);
+
+    // Verifica que el objeto Date sea válido y que coincida con los componentes de la fecha
+    return (
+        d.getFullYear() === year &&
+        d.getMonth() === month &&
+        d.getDate() === day
+    );
 }
 
 function CheckPassword(inputtxt) 
 { 
-var passw=  /^[A-Za-z]\w{7,14}$/;
+let passw=  /^[A-Za-z]\w{7,14}$/;
 if(inputtxt.match(passw)) 
 { 
 return true;
